@@ -14,7 +14,6 @@ const Header = () => {
 
     const userDetails = localStorage.getItem("user");
     const user = JSON.parse(userDetails);
-    console.log(user.name);
 
     useEffect(() => {
         if (userDetails == null) {

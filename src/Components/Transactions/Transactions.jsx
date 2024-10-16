@@ -1,5 +1,5 @@
 import styles from "./Transactions.module.css"
-import { useState } from "react";
+import { useState, } from "react";
 import { getTransactionsAPI, transactionAPI, getTransYearFilterAPI, getTransYearMonthFilterAPI, getTransCustomFilterAPI, transactionUpdateAPI, transactionDeleteAPI } from "../../apis.js"
 import { useDispatch, useSelector } from "react-redux";
 import { Transactiontable } from "./Transactiontable.jsx"
@@ -32,7 +32,11 @@ const Transactions = () => {
     //const transactions = appreducer.transactions;
 
     const { amount, type, category, date, others } = formData;
-    const userId = user._id;
+    let userId
+
+    if (user != null) {
+        userId = user._id;
+    }
 
     const currentYear = new Date().getFullYear();
 
@@ -46,6 +50,7 @@ const Transactions = () => {
         '01', '02', '03', '04', '05', '06',
         '07', '08', '09', '10', '11', '12'
     ];
+
 
     const handleTransaction = () => {
         if (addTransaction) {

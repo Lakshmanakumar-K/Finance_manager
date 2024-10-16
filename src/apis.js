@@ -35,7 +35,11 @@ export const signInAPI = async (formData) => {
 
 export const transactionAPI = async (transDetailsWithUserId) => {
     try {
-        const response = await apiInstance.post("/transactions", transDetailsWithUserId);
+        const response = await apiInstance.post("/transactions", transDetailsWithUserId, {
+            headers: {
+                "auth-token": localStorage.getItem("token") || "",
+            },
+        });
         return (response.data);
     }
     catch (e) {
@@ -48,7 +52,11 @@ export const transactionAPI = async (transDetailsWithUserId) => {
 export const getTransactionsAPI = async (userId) => {
 
     try {
-        const response = await apiInstance.get(`/transactions/${userId}`);
+        const response = await apiInstance.get(`/transactions/${userId}`, {
+            headers: {
+                "auth-token": localStorage.getItem("token") || "",
+            },
+        });
         return (response.data);
     }
     catch (e) {
@@ -60,7 +68,11 @@ export const getTransactionsAPI = async (userId) => {
 
 export const getTransYearFilterAPI = async (details) => {
     try {
-        const response = await apiInstance.post("/transactions/filter/year", details);
+        const response = await apiInstance.post("/transactions/filter/year", details, {
+            headers: {
+                "auth-token": localStorage.getItem("token") || "",
+            },
+        });
         return (response.data);
     }
     catch (e) {
@@ -72,7 +84,11 @@ export const getTransYearFilterAPI = async (details) => {
 
 export const getTransYearMonthFilterAPI = async (details) => {
     try {
-        const response = await apiInstance.post("/transactions/filter/year/month", details);
+        const response = await apiInstance.post("/transactions/filter/year/month", details, {
+            headers: {
+                "auth-token": localStorage.getItem("token") || "",
+            },
+        });
         return (response.data);
     }
     catch (e) {
@@ -84,7 +100,11 @@ export const getTransYearMonthFilterAPI = async (details) => {
 
 export const getTransCustomFilterAPI = async (details) => {
     try {
-        const response = await apiInstance.post("/transactions/filter/custom", details);
+        const response = await apiInstance.post("/transactions/filter/custom", details, {
+            headers: {
+                "auth-token": localStorage.getItem("token") || "",
+            },
+        });
         return (response.data);
     }
     catch (e) {
@@ -95,10 +115,14 @@ export const getTransCustomFilterAPI = async (details) => {
 }
 
 export const transactionUpdateAPI = async (userDetails) => {
-    
+
     try {
-        const response = await apiInstance.post("/transactions/update", userDetails);
-        return(response.data);
+        const response = await apiInstance.post("/transactions/update", userDetails, {
+            headers: {
+                "auth-token": localStorage.getItem("token") || "",
+            },
+        });
+        return (response.data);
     }
     catch (e) {
         const { response } = e;
@@ -108,14 +132,32 @@ export const transactionUpdateAPI = async (userDetails) => {
 }
 
 export const transactionDeleteAPI = async (transactionDetails) => {
-    
+
     try {
-        const response = await apiInstance.post("/transactions/delete", transactionDetails);
-        return(response.data);
+        const response = await apiInstance.post("/transactions/delete", transactionDetails, {
+            headers: {
+                "auth-token": localStorage.getItem("token") || "",
+            },
+        });
+        return (response.data);
     }
     catch (e) {
         const { response } = e;
         const { msg } = response.data;
         throw new Error(msg);
+    }
+}
+
+export const getTotalAmountAPI = async (obj) => {
+    try {
+        const response = await apiInstance.post("/transactions/aggregate", obj, {
+            headers: {
+                "auth-token": localStorage.getItem("token") || "",
+            },
+        });
+        return response.data;
+    }
+    catch (e) {
+        return e;
     }
 }

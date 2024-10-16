@@ -26,11 +26,12 @@ const SigninForm = () => {
         // Here you can handle the form submission (e.g., authentication logic)
         console.log(formState);
         try {
-            const { msg, userObj } = await signInAPI(formState);
+            const { msg, userObj, token } = await signInAPI(formState);
+            localStorage.setItem("user", JSON.stringify(userObj));
+            localStorage.setItem("token", token);
             const transactions = await getTransactionsAPI(userObj._id);
             alert(msg);
-            localStorage.setItem("user", JSON.stringify(userObj))
-            dispatch({ type: "user logged in", userObj, transactions });
+            dispatch({ type: "user logged in", userObj, transactions, });
         }
         catch (e) {
             alert(e.message);
